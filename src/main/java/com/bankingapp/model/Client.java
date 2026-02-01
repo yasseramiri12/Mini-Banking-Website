@@ -6,9 +6,9 @@ public class Client {
     private String prenom;
     private String email;
 
-    public int getID() {
-        return ID;
-    }
+        public int getID() {
+            return ID;
+        }
 
     public void setID(int ID) {
         this.ID = ID;

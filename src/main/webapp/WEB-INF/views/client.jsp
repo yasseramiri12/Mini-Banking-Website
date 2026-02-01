@@ -10,44 +10,99 @@
 
 <html>
 <head>
-    <title>Title</title>
+    <title>Gestion Client</title>
 </head>
+<body>
+
 <table width="100%" border="0">
     <tr>
+        <!-- ===== Recherche + Modification ===== -->
         <td width="50%" valign="top">
             <div>
                 <h3>Rechercher un client</h3>
+
                 <form action="client" method="post">
                     <input type="hidden" name="action" value="find">
-                    <p>donner id client</p>
-                    <input type="text" name="idClient">
+                    <label>Donner ID client :</label>
+                    <input type="text" name="idClient" required>
                     <br><br>
                     <input type="submit" value="Rechercher">
                 </form>
-                <c:out value="${client.nom} // ${client.prenom} // ${client.email}"/>
+
+                <!-- Affichage client trouvé -->
+                <c:if test="${not empty client}">
+                    <p>
+                        <strong>Client trouvé :</strong>
+                            ${client.nom} // ${client.prenom} // ${client.email}
+                        <form action="client" method="post">
+                            <input type="submit" name="action" value="delete">
+                            <input type="hidden" name="idClient" value="${client.ID}">
+
+                </form>
+                    ${message}
+
+                    </p>
+
+                    <h3>Modifier le client</h3>
+
+                    <form action="client" method="post">
+                        <input type="hidden" name="action" value="update">
+                        <input type="hidden" name="idClient" value="${client.ID}">
+
+                        <label>Nom :</label>
+                        <input type="text" name="nom" value="${client.nom}" required>
+                        <br><br>
+
+                        <label>Prénom :</label>
+                        <input type="text" name="prenom" value="${client.prenom}" required>
+                        <br><br>
+
+                        <label>Email :</label>
+                        <input type="email" name="email" value="${client.email}" required>
+                        <br><br>
+
+                        <input type="submit" value="Modifier">
+                    </form>
+                </c:if>
+
+                <c:if test="${not empty message}">
+                    <p style="color:green;">${message}</p>
+                </c:if>
+
+                <!-- Message si client introuvable -->
+                <c:if test="${empty client && not empty param.ID}">
+                    <p style="color:red;">Client introuvable</p>
+                </c:if>
             </div>
         </td>
 
+        <!-- ===== Ajout de nouveau client ===== -->
         <td width="50%" valign="top">
             <div>
                 <h3>Nouveau client</h3>
+
                 <form action="client" method="post">
                     <input type="hidden" name="action" value="add">
-                    <p>donner nom client</p>
-                    <input type="text" name="nomClient">
 
-                    <p>donner prénom client</p>
-                    <input type="text" name="prenomClient">
-
-                    <p>donner email client</p>
-                    <input type="email" name="EmailClient">
+                    <label>Nom :</label>
+                    <input type="text" name="nom" required>
                     <br><br>
+
+                    <label>Prénom :</label>
+                    <input type="text" name="prenom" required>
+                    <br><br>
+
+                    <label>Email :</label>
+                    <input type="email" name="email" required>
+                    <br><br>
+
                     <input type="submit" value="Enregistrer">
                 </form>
-                <c:out value="${message}"/>
+
             </div>
         </td>
     </tr>
 </table>
-<c:out value="${client.nom} // ${client.prenom} // ${client.email}"/>
+
+</body>
 </html>

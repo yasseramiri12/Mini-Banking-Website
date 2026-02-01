@@ -2,6 +2,7 @@ package com.bankingapp.dao;
 
 import com.bankingapp.model.Client;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,5 +70,73 @@ public class ClientDAO {
             if (connection != null) connection.close();
             if (preparedStatement != null ) preparedStatement.close();
         }
+    }
+
+    public void modifierClient(int idClient, String nom, String prenom, String email) throws SQLException {
+
+        loadDatabase();
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            String sql = "UPDATE CLIENT SET NOM = ? ,PRENOM = ?,Email = ? where ID_CLIENT = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, nom);
+            preparedStatement.setString(2, prenom);
+            preparedStatement.setString(3,email);
+            preparedStatement.setInt(4,idClient);
+
+            preparedStatement.executeUpdate();
+        } finally {
+            if(preparedStatement != null) preparedStatement.close();
+            if(connection != null) connection.close();
+        }
+    }
+
+    public void supprimerClient (BigDecimal idClient) throws SQLException{
+
+        loadDatabase();
+
+        PreparedStatement preparedStatement = null;
+        try {
+            String sql = "DELETE FROM CLIENT WHERE ID_CLIENT = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setBigDecimal(1, idClient);
+
+            preparedStatement.executeUpdate();
+        }finally {
+            if (connection != null) connection.close();
+            if (preparedStatement != null) preparedStatement.close();
+        }
+    }
+
+    public List <Client> listerClient() throws SQLException{
+        loadDatabase();
+        List <Client> clients = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            String sql = "SELECT * FROM CLIENT";
+            preparedStatement=connection.prepareStatement(sql);
+
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()){
+                Client client = new Client();
+                client.setID(resultSet.getInt("ID_CLIENT"));
+                client.setNom(resultSet.getString("NOM"));
+                client.setPrenom(resultSet.getString("PRENOM"));
+                client.setEmail(resultSet.getString("EMAIL"));
+
+                clients.add(client);
+            }
+
+        } finally {
+            if (resultSet != null) resultSet.close();
+            if (connection != null) connection.close();
+            if (preparedStatement != null) preparedStatement.close();
+        }
+    return clients;
     }
 }
