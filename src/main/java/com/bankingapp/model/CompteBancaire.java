@@ -2,7 +2,6 @@ package com.bankingapp.model;
 
 public class CompteBancaire {
     private int idCompte;
-    private String numeroCompte;
     private double solde;
     private String typeCompte;
     private String dateCreation;
@@ -16,13 +15,6 @@ public class CompteBancaire {
         this.idCompte = idCompte;
     }
 
-    public String getNumeroCompte() {
-        return numeroCompte;
-    }
-
-    public void setNumeroCompte(String numeroCompte) {
-        this.numeroCompte = numeroCompte;
-    }
 
     public double getSolde() {
         return solde;

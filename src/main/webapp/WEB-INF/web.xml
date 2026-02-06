@@ -13,4 +13,15 @@
         <servlet-name>ClientServlet</servlet-name>
         <url-pattern>/client</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CompteServlet</servlet-name>
+        <servlet-class>com.bankingapp.controller.CompteServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>CompteServlet</servlet-name>
+        <url-pattern>/compte</url-pattern>
+    </servlet-mapping>
+
 </web-app>
