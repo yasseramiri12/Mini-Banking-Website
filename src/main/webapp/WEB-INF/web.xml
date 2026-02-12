@@ -24,4 +24,14 @@
         <url-pattern>/compte</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>OperationServlet</servlet-name>
+        <servlet-class>com.bankingapp.controller.OperationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>OperationServlet</servlet-name>
+        <url-pattern>/operation</url-pattern>
+    </servlet-mapping>
+
 </web-app>
