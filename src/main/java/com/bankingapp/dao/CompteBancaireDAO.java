@@ -52,7 +52,7 @@ public class CompteBancaireDAO {
 
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
-
+        // Probably need adding a try catch for type compte and also change the setter layout to throw a new exception not to print it that's later me problem
         try {
             String CheckSql = "SELECT 1 FROM CLIENT WHERE ID_CLIENT = ?";
             preparedStatement = connection.prepareStatement(CheckSql);
@@ -130,6 +130,9 @@ public class CompteBancaireDAO {
         loadDatabase();
 
         PreparedStatement preparedStatement = null;
+        if (solde <= 0){
+            throw new SQLException("Le solde doit être positif");
+        }
 
         try {
             String sql = "UPDATE COMPTES SET SOLDE = ?, TYPE_COMPTE = ? WHERE ID_COMPTE = ?";
@@ -137,7 +140,10 @@ public class CompteBancaireDAO {
             preparedStatement.setDouble(1, solde);
             preparedStatement.setString(2, type_compte);
             preparedStatement.setInt(3, idCompte);
-            preparedStatement.executeUpdate();
+            int rows = preparedStatement.executeUpdate();
+            if (rows == 0){
+                throw new SQLException("Aucun compte trouvé avec l'ID : " + idCompte);
+            }
         } finally {
             if (preparedStatement != null) preparedStatement.close();
             if (connection != null) connection.close();

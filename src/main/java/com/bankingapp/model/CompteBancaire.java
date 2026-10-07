@@ -3,7 +3,7 @@ package com.bankingapp.model;
 public class CompteBancaire {
     private int idCompte;
     private double solde;
-    private String typeCompte;
+    private TypeCompte typeCompte;
     private String dateCreation;
     private Client client;
 
@@ -15,7 +15,6 @@ public class CompteBancaire {
         this.idCompte = idCompte;
     }
 
-
     public double getSolde() {
         return solde;
     }
@@ -24,12 +23,16 @@ public class CompteBancaire {
         this.solde = solde;
     }
 
-    public String getTypeCompte() {
+    public TypeCompte getTypeCompte() {
         return typeCompte;
     }
 
     public void setTypeCompte(String typeCompte) {
-        this.typeCompte = typeCompte;
+        try {
+            this.typeCompte = TypeCompte.valueOf(typeCompte.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Type Compte Invalide: EPARGNE / COURANT");
+        }
     }
 
     public String getDateCreation() {
