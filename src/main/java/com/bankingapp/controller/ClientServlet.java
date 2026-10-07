@@ -47,7 +47,7 @@ public class ClientServlet extends HttpServlet {
                 ClientDAO clientDAO = new ClientDAO();
                 clientDAO.ajouterClient(client);
 
-                request.setAttribute("message", "client added succesfully");
+                request.setAttribute("message", "client added succesfully 1");
                 request.getRequestDispatcher("/WEB-INF/views/client.jsp").forward(request, response);
 
             }
